@@ -1,3 +1,8 @@
+import turmeric from '../assets/turmeric.png'
+import chili from '../assets/chili.png'
+import cumin from '../assets/cumin.png'
+
+
 export const products = [
     {
         id: 'turmeric-powder',
@@ -5,7 +10,7 @@ export const products = [
         category: 'Ground Spices',
         shortDesc: 'High curcumin content turmeric powder sourced directly from the finest farms in India.',
         description: 'Our Premium Turmeric Powder is known for its deep golden color and high curcuminoid content. It is processed under hygienic conditions to preserve its natural aroma and medicinal properties.',
-        image: '/src/assets/turmeric.png',
+        image: turmeric,
         specs: {
             'HS Code': '09103020',
             'Purity': '99% Min',
@@ -23,7 +28,7 @@ export const products = [
         category: 'Ground Spices',
         shortDesc: 'Vibrant red, spicy and aromatic chili powder made from sun-dried premium chilies.',
         description: 'Sourced from the heart of Guntur, our Red Chili Powder is characterized by its intense heat and brilliant red color. We offer various heat levels (SHU) to meet different global requirements.',
-        image: '/src/assets/chili.png',
+        image: chili,
         specs: {
             'HS Code': '09042211',
             'Purity': '98% Min',
@@ -41,7 +46,7 @@ export const products = [
         category: 'Whole Spices',
         shortDesc: 'Bold and aromatic cumin seeds, meticulously cleaned and processed for global standards.',
         description: 'Our Cumin Seeds are selected for their high volatile oil content and bold size. We use Singapore Quality (99%) and Europe Quality (99.5% Machine Cleaned) standards.',
-        image: '/src/assets/cumin.png',
+        image: cumin,
         specs: {
             'HS Code': '09093129',
             'Purity': '99% / 99.5% / 99.9% Min',

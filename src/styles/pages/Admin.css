@@ -1,0 +1,43 @@
+.admin-login-page {
+    min-height: 100vh;
+    background-color: var(--bg-cream);
+    padding: 100px 20px;
+}
+
+.login-card {
+    background-color: var(--white);
+    padding: 50px 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+}
+
+.login-header {
+    margin-bottom: 40px;
+}
+
+.login-header h2 {
+    margin-top: 15px;
+    font-size: 32px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.alert-note {
+    background-color: #fffbeb;
+    border: 1px solid #fef3c7;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #92400e;
+    line-height: 1.5;
+}
+
+.w-100 {
+    width: 100%;
+}

@@ -1,0 +1,149 @@
+.detail-header {
+    padding: 160px 0 80px;
+    background-color: var(--bg-cream);
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-light);
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    color: var(--primary);
+}
+
+.detail-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.product-main-image img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.product-main-info h1 {
+    font-size: 42px;
+    margin: 15px 0 25px;
+}
+
+.category-tag {
+    color: var(--secondary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 13px;
+}
+
+.large-desc {
+    font-size: 18px;
+    color: var(--text-light);
+    margin-bottom: 35px;
+    line-height: 1.6;
+}
+
+.packaging-info h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.pack-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.pack-tag {
+    background-color: var(--white);
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 35px;
+    border-radius: 50px;
+}
+
+.specifications {
+    background-color: var(--white);
+}
+
+.specs-container {
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.specs-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.specs-table th {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 18px 25px;
+    text-align: left;
+    font-size: 16px;
+}
+
+.specs-table td {
+    padding: 15px 25px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 15px;
+}
+
+.specs-table tr:last-child td {
+    border-bottom: none;
+}
+
+.specs-table tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+.param-name {
+    font-weight: 700;
+    color: var(--primary-dark);
+    width: 40%;
+}
+
+.param-value {
+    color: var(--text-dark);
+}
+
+@media (max-width: 992px) {
+    .detail-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+@media (max-width: 600px) {
+    .detail-header {
+        padding: 120px 0 60px;
+    }
+
+    .product-main-info h1 {
+        font-size: 32px;
+    }
+}

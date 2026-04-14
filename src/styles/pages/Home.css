@@ -168,19 +168,22 @@
     text-align: center;
 }
 
-.stat-card {
+.home-stat-card {
     flex: 1;
     padding: 20px;
     transition: var(--transition);
+    background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
-.stat-icon {
+.home-stat-icon {
     color: var(--accent);
     margin-bottom: 15px;
     opacity: 0.9;
 }
 
-.stat-card h3 {
+.home-stat-card h3 {
     font-size: 64px;
     font-weight: 800;
     margin-bottom: 10px;
@@ -188,23 +191,23 @@
 }
 
 /* Unique colors for each stat number */
-.stat-card:nth-child(1) h3 {
+.home-stat-card:nth-child(1) h3 {
     color: var(--accent);
 }
 
 /* Orange */
-.stat-card:nth-child(2) h3 {
+.home-stat-card:nth-child(2) h3 {
     color: #E9C46A;
 }
 
 /* Saffron/Gold */
-.stat-card:nth-child(3) h3 {
+.home-stat-card:nth-child(3) h3 {
     color: #81B29A;
 }
 
 /* Sage Green */
 
-.stat-card p {
+.home-stat-card p {
     font-size: 16px;
     text-transform: uppercase;
     letter-spacing: 1px;

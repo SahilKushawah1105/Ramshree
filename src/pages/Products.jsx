@@ -1,16 +1,36 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import getApiUrl from '../api/config'
+import { Search, Filter, ArrowRight, Loader } from 'lucide-react'
 import ProductCard from '../components/ProductCard'
-import { products, categories } from '../data/products'
 import SEO from '../components/SEO'
 import '../styles/pages/Products.css'
 
 const Products = () => {
+    const [products, setProducts] = useState([])
+    const [loading, setLoading] = useState(true)
     const [activeCategory, setActiveCategory] = useState('All')
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch(getApiUrl('/api/products'))
+                const data = await response.json()
+                setProducts(data)
+            } catch (error) {
+                console.error('Failed to fetch products:', error)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchProducts()
+    }, [])
+
+    const categories = ['All', ...new Set(products.flatMap(p => p.categories || []))]
 
     const filteredProducts = activeCategory === 'All'
         ? products
-        : products.filter(p => p.category === activeCategory)
+        : products.filter(p => (p.categories || []).includes(activeCategory))
 
     return (
         <div className="products-page">
@@ -57,6 +77,7 @@ const Products = () => {
                                         name={product.name}
                                         image={product.image}
                                         description={product.shortDesc}
+                                        categories={product.categories}
                                     />
                                 </motion.div>
                             ))}

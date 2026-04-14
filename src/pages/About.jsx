@@ -1,15 +1,44 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import SEO from '../components/SEO'
-import aboutImg from '../assets/office.png'
+import { CheckCircle2, Loader } from 'lucide-react'
+import getApiUrl from '../api/config'
 import '../styles/pages/About.css'
 
 const About = () => {
+    const [content, setContent] = useState(null)
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchContent = async () => {
+            try {
+                const response = await fetch(getApiUrl('/api/settings'))
+                const data = await response.json()
+
+                // Parse the JSON strings from settings
+                setContent({
+                    whoWeAre: JSON.parse(data.about_who_we_are || '{}'),
+                    visionMission: JSON.parse(data.about_vision_mission || '{}'),
+                    infrastructure: JSON.parse(data.about_infrastructure || '{"cards":[]}')
+                })
+            } catch (error) {
+                console.error('Failed to fetch about content:', error)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchContent()
+    }, [])
+
+    if (loading) return <div className="loader-container section-padding flex-center" style={{ minHeight: '60vh' }}><Loader className="spin" size={48} /></div>
+
+    const { whoWeAre, visionMission, infrastructure } = content
+
     return (
         <div className="about-page">
             <SEO
                 title="About Us"
-                description="Learn more about Ramshree International, a premier merchant exporter of Indian spices based in Ahmedabad, Gujarat."
+                description={whoWeAre.desc1 || "Learn more about Ramshree International, a premier merchant exporter of Indian spices."}
             />
 
             <section className="page-header">
@@ -28,32 +57,23 @@ const About = () => {
                             viewport={{ once: true }}
                             className="about-image"
                         >
-                            <img src={aboutImg} alt="About Ramshree" />
+                            <img src={getApiUrl(whoWeAre.image)} alt="About Ramshree" />
                         </motion.div>
 
                         <div className="about-content">
                             <span className="section-tag">Who We Are</span>
-                            <h2>Ramshree <span>International</span></h2>
-                            <p>
-                                Ramshree International is a premier merchant exporter of high-quality Indian spices,
-                                based in the heart of the global spice trade—Ahmedabad, India.
-                                Our journey began with a simple vision: to bring the authentic flavors of Indian
-                                heritage to every kitchen worldwide.
-                            </p>
-                            <p>
-                                We specialize in sourcing, processing, and exporting a wide range of spices,
-                                including Turmeric, Red Chili, Cumin, and Oil Seeds. Every product we export
-                                undergoes rigorous quality testing to ensure it meets international food safety standards.
-                            </p>
+                            <h2>{whoWeAre.title?.split(' ')[0]} <span>{whoWeAre.title?.split(' ').slice(1).join(' ')}</span></h2>
+                            <p>{whoWeAre.desc1}</p>
+                            <p>{whoWeAre.desc2}</p>
 
                             <div className="vision-mission flex">
                                 <div className="vm-box">
-                                    <h3>Our Vision</h3>
-                                    <p>To be the globally recognized leader in the spice export industry, known for purity and trust.</p>
+                                    <h3>{visionMission.vision_title || 'Our Vision'}</h3>
+                                    <p>{visionMission.vision_desc}</p>
                                 </div>
                                 <div className="vm-box">
-                                    <h3>Our Mission</h3>
-                                    <p>To provide high-quality agricultural products that enrich the lives of consumers worldwide.</p>
+                                    <h3>{visionMission.mission_title || 'Our Mission'}</h3>
+                                    <p>{visionMission.mission_desc}</p>
                                 </div>
                             </div>
                         </div>
@@ -65,23 +85,17 @@ const About = () => {
                 <div className="container">
                     <div className="section-header text-center">
                         <span className="section-tag">Our Setup</span>
-                        <h2>Modern <span>Infrastructure</span></h2>
-                        <p>Strategically located facilities for efficient processing and global distribution.</p>
+                        <h2>{infrastructure.title?.split(' ')[0]} <span>{infrastructure.title?.split(' ').slice(1).join(' ')}</span></h2>
+                        <p>{infrastructure.desc}</p>
                     </div>
 
                     <div className="infra-grid grid">
-                        <div className="infra-card">
-                            <h4>Advanced Processing</h4>
-                            <p>Our processing units are equipped with modern machinery for cleaning, sorting, and grinding spices while maintaining their volatile oils.</p>
-                        </div>
-                        <div className="infra-card">
-                            <h4>Quality Lab</h4>
-                            <p>Dedicated quality control laboratories to test moisture content, purity levels, and microbial parameters before every shipment.</p>
-                        </div>
-                        <div className="infra-card">
-                            <h4>Strategic Locations</h4>
-                            <p>Proximity to major ports like Mundra and Kandla ensures cost-effective and timely shipping for our global partners.</p>
-                        </div>
+                        {(infrastructure.cards || []).map((card, idx) => (
+                            <div key={idx} className="infra-card">
+                                <h4>{card.title}</h4>
+                                <p>{card.desc}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>

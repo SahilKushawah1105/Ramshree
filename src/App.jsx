@@ -1,20 +1,28 @@
 import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import FloatingWidgets from './components/FloatingWidgets'
+import Chatbot from './components/Chatbot'
 import Home from './pages/Home'
 import Products from './pages/Products'
 import ProductDetail from './pages/ProductDetail'
 import AdminLogin from './pages/admin/AdminLogin'
+import AdminDashboard from './pages/admin/Dashboard'
+import AdminProducts from './pages/admin/Products'
+import AdminSettings from './pages/admin/Settings'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import ProtectedRoute from './components/ProtectedRoute'
 import './styles/App.css'
 
 function App() {
+  const location = useLocation();
+  const isAdminLogin = location.pathname === '/admin';
+
   return (
     <div className="app">
-      <Navbar />
+      {!isAdminLogin && <Navbar />}
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -22,11 +30,32 @@ function App() {
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+
+          {/* Admin Routes */}
           <Route path="/admin" element={<AdminLogin />} />
+
+          <Route path="/admin/dashboard" element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/admin/products" element={
+            <ProtectedRoute>
+              <AdminProducts />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/admin/settings" element={
+            <ProtectedRoute>
+              <AdminSettings />
+            </ProtectedRoute>
+          } />
         </Routes>
       </main>
       <FloatingWidgets />
-      <Footer />
+      <Chatbot />
+      {!isAdminLogin && <Footer />}
     </div>
   )
 }

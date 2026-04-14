@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
+import getApiUrl from '../api/config'
 import { CheckCircle, Globe, Shield, Zap, ArrowRight, Package, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Hero from '../components/Hero'
@@ -37,6 +38,24 @@ const Counter = ({ value, duration = 2 }) => {
 }
 
 const Home = () => {
+    const [products, setProducts] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch(getApiUrl('/api/products'))
+                const data = await response.json()
+                setProducts(data)
+            } catch (error) {
+                console.error('Failed to fetch products:', error)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchProducts()
+    }, [])
+
     const featuredProducts = products.slice(0, 3)
 
     const advantages = [
@@ -72,12 +91,12 @@ const Home = () => {
 
             <Hero />
 
-            <section className="featured-products section-padding bg-light">
+            <section className="featured-products section-padding">
                 <div className="container">
                     <div className="section-header text-center">
-                        <span className="section-tag">Our Collection</span>
-                        <h2>Featured <span>Spices</span></h2>
-                        <p>Explore our selection of premium quality Indian spices.</p>
+                        <span className="section-tag" style={{ background: 'var(--primary-light)', color: 'var(--primary)', padding: '6px 16px', borderRadius: '100px', fontWeight: 700, fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Premium Selection</span>
+                        <h2 style={{ fontSize: '48px', marginTop: '16px' }}>Featured <span>Spices</span></h2>
+                        <p style={{ maxWidth: '600px', margin: '16px auto 0' }}>Discover our handpicked collection of India's finest spices, sourced for quality and authenticity.</p>
                     </div>
                     <div className="product-grid">
                         {featuredProducts.map((product) => (
@@ -90,8 +109,10 @@ const Home = () => {
                             />
                         ))}
                     </div>
-                    <div className="text-center mt-50">
-                        <Link to="/products" className="btn btn-primary">View All Products <ArrowRight size={18} /></Link>
+                    <div className="text-center mt-70">
+                        <Link to="/products" className="btn btn-primary btn-lg" style={{ borderRadius: '100px', padding: '18px 48px', boxShadow: '0 20px 40px -10px rgba(11, 83, 45, 0.3)' }}>
+                            Explore Full Catalog <ArrowRight size={18} />
+                        </Link>
                     </div>
                 </div>
             </section>
@@ -118,18 +139,18 @@ const Home = () => {
 
                     <div className="stats-section mt-50">
                         <div className="stats-container flex">
-                            <div className="stat-card">
-                                <div className="stat-icon"><Globe size={32} /></div>
+                            <div className="home-stat-card">
+                                <div className="home-stat-icon"><Globe size={32} /></div>
                                 <h3><Counter value="15+" /></h3>
                                 <p>Countries Served Worldwide</p>
                             </div>
-                            <div className="stat-card">
-                                <div className="stat-icon"><Package size={32} /></div>
+                            <div className="home-stat-card">
+                                <div className="home-stat-icon"><Package size={32} /></div>
                                 <h3><Counter value="50+" /></h3>
                                 <p>Premium Spice Products</p>
                             </div>
-                            <div className="stat-card">
-                                <div className="stat-icon"><ShieldCheck size={32} /></div>
+                            <div className="home-stat-card">
+                                <div className="home-stat-icon"><ShieldCheck size={32} /></div>
                                 <h3><Counter value="100%" /></h3>
                                 <p>Strict Quality Testing</p>
                             </div>

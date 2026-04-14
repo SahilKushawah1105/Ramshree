@@ -134,6 +134,7 @@
     font-size: 14px;
     border-radius: 50px;
     box-shadow: 0 4px 15px rgba(45, 90, 39, 0.2);
+    color: #ffffff !important;
 }
 
 .mobile-toggle {
@@ -246,6 +247,7 @@
     padding: 16px !important;
     text-align: center;
     font-family: 'Outfit', sans-serif !important;
+    color: #ffffff !important;
 }
 
 @media (max-width: 992px) {

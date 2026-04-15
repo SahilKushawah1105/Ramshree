@@ -2,6 +2,7 @@ import React from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import ScrollToTop from './components/ScrollToTop'
 import FloatingWidgets from './components/FloatingWidgets'
 import Chatbot from './components/Chatbot'
 import Home from './pages/Home'
@@ -25,6 +26,7 @@ function App() {
 
   return (
     <div className="app">
+      <ScrollToTop />
       {!isAdminLogin && <Navbar />}
       <main>
         <Routes>

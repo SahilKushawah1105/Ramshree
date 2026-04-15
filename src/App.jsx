@@ -11,6 +11,9 @@ import AdminLogin from './pages/admin/AdminLogin'
 import AdminDashboard from './pages/admin/Dashboard'
 import AdminProducts from './pages/admin/Products'
 import AdminSettings from './pages/admin/Settings'
+import AdminBlogs from './pages/admin/Blogs'
+import Blogs from './pages/Blogs'
+import BlogDetail from './pages/BlogDetail'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -29,6 +32,8 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/about" element={<About />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:id" element={<BlogDetail />} />
           <Route path="/contact" element={<Contact />} />
 
           {/* Admin Routes */}
@@ -49,6 +54,12 @@ function App() {
           <Route path="/admin/settings" element={
             <ProtectedRoute>
               <AdminSettings />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/admin/blogs" element={
+            <ProtectedRoute>
+              <AdminBlogs />
             </ProtectedRoute>
           } />
         </Routes>

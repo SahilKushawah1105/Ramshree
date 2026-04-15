@@ -58,6 +58,7 @@ const Navbar = () => {
                         <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
                         <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>About Us</Link>
                         <Link to="/products" className={location.pathname === '/products' ? 'active' : ''}>Products</Link>
+                        <Link to="/blogs" className={location.pathname === '/blogs' ? 'active' : ''}>Blogs</Link>
                         <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact</Link>
                         <Link to="/contact" className="btn btn-primary nav-cta">Get Inquiry</Link>
                     </div>
@@ -82,8 +83,9 @@ const Navbar = () => {
                     <Link to="/" className={location.pathname === '/' ? 'active' : ''} style={{ '--i': 1 }}>Home</Link>
                     <Link to="/about" className={location.pathname === '/about' ? 'active' : ''} style={{ '--i': 2 }}>About Us</Link>
                     <Link to="/products" className={location.pathname === '/products' ? 'active' : ''} style={{ '--i': 3 }}>Products</Link>
-                    <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''} style={{ '--i': 4 }}>Contact</Link>
-                    <Link to="/contact" className="btn btn-primary menu-cta" style={{ '--i': 5 }}>Get Inquiry</Link>
+                    <Link to="/blogs" className={location.pathname === '/blogs' ? 'active' : ''} style={{ '--i': 4 }}>Blogs</Link>
+                    <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''} style={{ '--i': 5 }}>Contact</Link>
+                    <Link to="/contact" className="btn btn-primary menu-cta" style={{ '--i': 6 }}>Get Inquiry</Link>
                 </div>
             </div>
         </nav>

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import { X } from 'lucide-react'
 import getApiUrl from '../api/config'
 import '../styles/components/Certifications.css'
 
 const Certifications = () => {
     const [certs, setCerts] = useState([])
     const [loading, setLoading] = useState(true)
+    const [selectedCert, setSelectedCert] = useState(null)
 
     useEffect(() => {
         const fetchCerts = async () => {
@@ -46,6 +48,7 @@ const Certifications = () => {
                             viewport={{ once: true }}
                             transition={{ delay: idx * 0.1 }}
                             className="cert-card"
+                            onClick={() => setSelectedCert(cert)}
                         >
                             <div className="icon-wrapper">
                                 {cert.icon ? (
@@ -66,6 +69,43 @@ const Certifications = () => {
                     ))}
                 </div>
             </div>
+
+            <AnimatePresence>
+                {selectedCert && (
+                    <motion.div 
+                        className="cert-modal-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setSelectedCert(null)}
+                    >
+                        <motion.div 
+                            className="cert-modal-content"
+                            initial={{ scale: 0.8, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.8, opacity: 0, y: 20 }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <button className="cert-modal-close" onClick={() => setSelectedCert(null)}>
+                                <X size={24} />
+                            </button>
+                            <div className="cert-modal-body">
+                                <div className="cert-modal-image">
+                                    <img 
+                                        src={selectedCert.icon.startsWith('http') ? selectedCert.icon : getApiUrl(selectedCert.icon)} 
+                                        alt={selectedCert.title} 
+                                    />
+                                </div>
+                                <div className="cert-modal-info">
+                                    <span className="section-tag">Certification</span>
+                                    <h2>{selectedCert.title}</h2>
+                                    <p>{selectedCert.description}</p>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     )
 }

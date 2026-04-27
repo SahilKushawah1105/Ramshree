@@ -1,15 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Award, CheckCircle2, ShieldCheck, FileCheck } from 'lucide-react'
+import getApiUrl from '../api/config'
 import '../styles/components/Certifications.css'
 
 const Certifications = () => {
-    const certs = [
-        { icon: <Award className="cert-icon" />, title: 'FSSAI Certified', desc: 'Food Safety and Standards Authority of India' },
-        { icon: <ShieldCheck className="cert-icon" />, title: 'APEDA Member', desc: 'Agricultural & Processed Food Products Export Development Authority' },
-        { icon: <CheckCircle2 className="cert-icon" />, title: 'ISO 9001:2015', desc: 'International Quality Management Standard' },
-        { icon: <FileCheck className="cert-icon" />, title: 'Import Export Code', desc: 'Registered with Directorate General of Foreign Trade' }
-    ]
+    const [certs, setCerts] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchCerts = async () => {
+            try {
+                const response = await fetch(getApiUrl('/api/certifications'))
+                const data = await response.json()
+                if (Array.isArray(data)) {
+                    setCerts(data)
+                } else {
+                    console.error('Expected an array for certifications, got:', data)
+                }
+            } catch (error) {
+                console.error('Error fetching certifications:', error)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchCerts()
+    }, [])
+
+    if (loading) return null;
 
     return (
         <section className="certifications section-padding">
@@ -23,7 +40,7 @@ const Certifications = () => {
                 <div className="cert-grid">
                     {certs.map((cert, idx) => (
                         <motion.div
-                            key={idx}
+                            key={cert.id || idx}
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
@@ -31,11 +48,19 @@ const Certifications = () => {
                             className="cert-card"
                         >
                             <div className="icon-wrapper">
-                                {cert.icon}
+                                {cert.icon ? (
+                                    <img 
+                                        src={cert.icon.startsWith('http') ? cert.icon : getApiUrl(cert.icon)} 
+                                        alt={cert.title} 
+                                        className="cert-icon-img" 
+                                    />
+                                ) : (
+                                    <div className="cert-icon-placeholder" />
+                                )}
                             </div>
                             <div className="cert-info">
                                 <h3>{cert.title}</h3>
-                                <p>{cert.desc}</p>
+                                <p>{cert.description}</p>
                             </div>
                         </motion.div>
                     ))}

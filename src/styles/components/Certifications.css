@@ -34,9 +34,10 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
-.cert-icon {
+.cert-icon, .cert-icon-img {
     width: 40px;
     height: 40px;
+    object-fit: contain;
     color: var(--secondary);
 }
 

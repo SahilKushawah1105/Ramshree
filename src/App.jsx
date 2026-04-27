@@ -13,6 +13,7 @@ import AdminDashboard from './pages/admin/Dashboard'
 import AdminProducts from './pages/admin/Products'
 import AdminSettings from './pages/admin/Settings'
 import AdminBlogs from './pages/admin/Blogs'
+import AdminCertifications from './pages/admin/Certifications'
 import Blogs from './pages/Blogs'
 import BlogDetail from './pages/BlogDetail'
 import About from './pages/About'
@@ -62,6 +63,12 @@ function App() {
           <Route path="/admin/blogs" element={
             <ProtectedRoute>
               <AdminBlogs />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/admin/certifications" element={
+            <ProtectedRoute>
+              <AdminCertifications />
             </ProtectedRoute>
           } />
         </Routes>

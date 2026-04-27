@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Package, Settings, Users, ArrowUpRight, FileText } from 'lucide-react'
+import { Package, Settings, Users, ArrowUpRight, FileText, ShieldCheck } from 'lucide-react'
 import getApiUrl from '../../api/config'
 import { Link } from 'react-router-dom'
 import '../../styles/pages/Admin.css'
@@ -107,6 +107,14 @@ const Dashboard = () => {
                             <div>
                                 <strong>Manage Blogs</strong>
                                 <p style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '4px' }}>Add, edit or remove blog posts</p>
+                            </div>
+                            <ArrowUpRight size={20} />
+                        </Link>
+                        <Link to="/admin/certifications" className="action-card">
+                            <ShieldCheck size={24} />
+                            <div>
+                                <strong>Manage Certifications</strong>
+                                <p style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '4px' }}>Manage the trust and standards certifications</p>
                             </div>
                             <ArrowUpRight size={20} />
                         </Link>

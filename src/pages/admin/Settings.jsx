@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Save, Mail, Phone, MapPin, Loader, Image as ImageIcon, Plus, Trash2, Layout, Settings as SettingsIcon } from 'lucide-react'
+import { Save, Mail, Phone, MapPin, Loader, Image as ImageIcon, Plus, Trash2, Layout, Settings as SettingsIcon, FileText } from 'lucide-react'
 import getApiUrl from '../../api/config'
 import '../../styles/pages/Admin.css'
 
@@ -101,6 +101,37 @@ const Settings = () => {
                 handleJsonChange(settingKey, 'image', data.url)
             } else {
                 alert('Failed to upload image')
+            }
+        } catch (error) {
+            alert('Upload error')
+        } finally {
+            setUploadingImage(false)
+        }
+    }
+
+    const handleCatalogUpload = async (e) => {
+        const file = e.target.files[0]
+        if (!file) return
+
+        setUploadingImage(true)
+        const formData = new FormData()
+        formData.append('file', file)
+
+        try {
+            const token = localStorage.getItem('adminToken')
+            const response = await fetch(getApiUrl('/api/settings/upload'), {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+            })
+
+            if (response.ok) {
+                const data = await response.json()
+                setSettings(prev => ({ ...prev, catalog_url: data.url }))
+            } else {
+                alert('Failed to upload catalog')
             }
         } catch (error) {
             alert('Upload error')
@@ -229,6 +260,47 @@ const Settings = () => {
                                         <label>Twitter URL</label>
                                         <input type="text" name="twitter" placeholder="https://twitter.com/..." value={settings.twitter} onChange={handleChange} />
                                     </div>
+                                </div>
+                            </section>
+
+                            <section className="settings-section">
+                                <h2><FileText size={22} /> Product Catalog</h2>
+                                <p className="mb-15 text-muted">Upload your latest PDF catalog for customers to download.</p>
+                                <div className="input-group">
+                                    <label>Catalog PDF File</label>
+                                    <div className="flex-between gap-20">
+                                        <div className="flex-grow-1">
+                                            <input 
+                                                type="text" 
+                                                readOnly 
+                                                placeholder="No catalog uploaded" 
+                                                value={settings.catalog_url || ''} 
+                                            />
+                                        </div>
+                                        <button 
+                                            type="button" 
+                                            className="btn-light flex-center gap-10"
+                                            onClick={() => document.getElementById('catalogUpload').click()}
+                                            disabled={uploadingImage}
+                                        >
+                                            {uploadingImage ? <Loader size={18} className="spin" /> : <Plus size={18} />}
+                                            Upload PDF
+                                        </button>
+                                        <input 
+                                            type="file" 
+                                            id="catalogUpload" 
+                                            hidden 
+                                            accept="application/pdf"
+                                            onChange={(e) => handleCatalogUpload(e)}
+                                        />
+                                    </div>
+                                    {settings.catalog_url && (
+                                        <div className="mt-10">
+                                            <a href={getApiUrl(settings.catalog_url)} target="_blank" rel="noopener noreferrer" className="text-primary flex-center gap-10" style={{ justifyContent: 'flex-start' }}>
+                                                <FileText size={16} /> View Current Catalog
+                                            </a>
+                                        </div>
+                                    )}
                                 </div>
                             </section>
                         </>

@@ -1,16 +1,33 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, FileText } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import getApiUrl from '../api/config'
 import heroBg from '../assets/hero-bg.png'
 import '../styles/components/Hero.css'
 
 const Hero = () => {
+    const [catalogUrl, setCatalogUrl] = useState('')
     const ref = useRef(null)
     const { scrollYProgress } = useScroll({
         target: ref,
         offset: ["start start", "end start"]
     })
+
+    useEffect(() => {
+        const fetchSettings = async () => {
+            try {
+                const response = await fetch(getApiUrl('/api/settings'))
+                const data = await response.json()
+                if (data.catalog_url) {
+                    setCatalogUrl(data.catalog_url)
+                }
+            } catch (error) {
+                console.error('Failed to fetch settings:', error)
+            }
+        }
+        fetchSettings()
+    }, [])
 
     const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
     const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
@@ -64,6 +81,16 @@ const Hero = () => {
                     >
                         <Link to="/products" className="btn btn-primary">Our Products <ArrowRight size={18} /></Link>
                         <Link to="/contact" className="btn btn-outline">Send Inquiry</Link>
+                        {catalogUrl && (
+                            <a
+                                href={getApiUrl(catalogUrl)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn btn-catalog flex-center gap-10"
+                            >
+                                <FileText size={18} /> Download catalogue
+                            </a>
+                        )}
                     </motion.div>
                 </motion.div>
             </div>

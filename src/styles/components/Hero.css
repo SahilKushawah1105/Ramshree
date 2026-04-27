@@ -87,6 +87,23 @@
     color: var(--primary);
 }
 
+.btn-catalog {
+    background: linear-gradient(135deg, #d4af37 0%, #f9d976 100%);
+    color: #000;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    transition: all 0.3s ease;
+    border: none;
+    padding: 10px 24px;
+}
+
+.btn-catalog:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+    background: linear-gradient(135deg, #f9d976 0%, #d4af37 100%);
+    color: #000;
+}
+
 @media (max-width: 768px) {
     .hero-text h1 {
         font-size: 40px;
